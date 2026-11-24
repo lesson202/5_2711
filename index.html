@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Графічні об’єкти на слайдах — 2 уроки</title>
+<style>
+:root{--bg:#f6f2e9;--card:#ffffff;--ink:#1b2540;--muted:#5a6482;--line:#ddd6c6;--accent:#2f5fd0;--accent-ink:#ffffff;--soft:#e3ebfb;--ok:#1d6b3a;--okbg:#dff3e6;--bad:#9b2c2c;--badbg:#fde4e1;--input:#fbf9f4;--orange:#f08a24}
+body[data-l="2"]{--accent:#0f7b83;--soft:#d9f1f2}
+@media (prefers-color-scheme:dark){:root{--bg:#121a2f;--card:#1c2745;--ink:#f1eee6;--muted:#aab3cc;--line:#37436b;--accent:#8fb0ff;--accent-ink:#102252;--soft:#26335c;--ok:#8fe0ac;--okbg:#1c3a2a;--bad:#ffb3aa;--badbg:#4a2326;--input:#16203a}body[data-l="2"]{--accent:#6fd6dc;--accent-ink:#06383c;--soft:#18444a}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:110px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Nunito","Segoe UI",Arial,sans-serif;font-size:18px;line-height:1.55;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+main{max-width:940px;margin:0 auto;padding:12px 16px 80px}
+h1,h2,h3{font-family:"Rubik","Segoe UI",Arial,sans-serif;line-height:1.2;margin:0}
+.top{position:sticky;top:0;z-index:5;background:var(--card);border-bottom:1px solid var(--line);padding:8px 16px;padding-top:calc(8px + env(safe-area-inset-top,0px))}
+.top .row{max-width:940px;margin:0 auto;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.bar{flex:1;min-width:120px;height:10px;background:var(--soft);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .3s}
+.small{font-size:15px;color:var(--muted)}
+.tab{background:var(--soft);color:var(--ink);border:2px solid transparent;border-radius:99px;padding:5px 14px;margin:0;font-weight:700;cursor:pointer;font:inherit;font-weight:700;font-size:16px}
+.tab[aria-selected="true"]{background:var(--accent);color:var(--accent-ink)}
+.hero{background:linear-gradient(135deg,var(--accent),#1b2540);color:#fff;border-radius:24px;padding:26px;margin:10px 0 18px}
+.hero h1{font-size:30px;margin-bottom:6px}
+.badge{display:inline-block;background:rgba(255,255,255,.2);border-radius:99px;padding:2px 14px;font-weight:700;font-size:15px;margin-bottom:8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px;margin:0 0 18px}
+.card.done{border-color:var(--ok)}
+.card h2{font-size:23px;margin:4px 0 8px}
+.card h3{font-size:18px;margin:14px 0 6px;color:var(--accent)}
+.tag{display:inline-block;background:var(--soft);font-weight:700;font-size:14px;padding:2px 12px;border-radius:99px;margin-right:6px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:10px 0}
+.box{background:var(--soft);border-radius:14px;padding:12px 16px}
+.box b{display:block;margin-bottom:2px}
+ul,ol{padding-left:22px;margin:6px 0}li{margin:4px 0}
+label.f{display:block;margin:10px 0}label.f>span{display:block;font-weight:700;margin-bottom:4px}
+input[type=text],input[type=url],textarea,select{font:inherit;width:100%;padding:9px 12px;border-radius:12px;border:1px solid var(--line);background:var(--input);color:var(--ink)}
+textarea{min-height:70px;resize:vertical}
+label.opt{display:flex;gap:10px;align-items:flex-start;padding:7px 10px;border:1px solid var(--line);border-radius:12px;margin:6px 0;cursor:pointer}
+label.opt input{width:20px;height:20px;margin-top:3px;flex:none;accent-color:var(--accent)}
+.it{border:1px solid var(--line);border-radius:14px;padding:10px 14px;margin:10px 0}
+.it>p{margin:0 0 6px;font-weight:700}
+.it.ok{background:var(--okbg);border-color:var(--ok)}.it.bad{background:var(--badbg);border-color:var(--bad)}
+.fb{font-size:16px;font-weight:600;margin:6px 0 0}.it.ok .fb{color:var(--ok)}.it.bad .fb{color:var(--bad)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips label{display:flex;gap:8px;align-items:center;border:1px solid var(--line);border-radius:99px;padding:5px 14px;cursor:pointer}
+.chips input{accent-color:var(--accent)}
+button.b{font:inherit;font-weight:700;background:var(--accent);color:var(--accent-ink);border:0;border-radius:12px;padding:10px 20px;cursor:pointer;margin:8px 8px 0 0}
+button.b.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+button.b.on{outline:3px solid var(--accent)}
+.res{font-weight:700;margin-top:8px}
+code.copy{display:block;background:var(--soft);border-radius:10px;padding:8px 12px;font-size:15px}
+.canvas{position:relative;aspect-ratio:16/9;background:#fff;border:2px solid #9aa3bf;border-radius:10px;overflow:hidden;touch-action:none}
+.it2{position:absolute;cursor:grab;touch-action:none;user-select:none;color:#1b2540;text-align:center}
+.it2.sel{outline:3px solid #2f5fd0;outline-offset:2px}
+.pal{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.pal button{background:var(--soft);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:6px 12px;font:inherit;font-size:16px;cursor:pointer}
+.stage{background:#fff;border:2px solid #9aa3bf;border-radius:10px;min-height:280px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+#imbox{width:150px;height:150px;display:flex;align-items:center;justify-content:center;font-size:90px;background:radial-gradient(circle at 30% 30%,#fff3b0,#8fd3ff 60%,#4a8fe0);transition:all .1s}
+.ctr{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:10px}
+.ctr>div{border:1px solid var(--line);border-radius:12px;padding:8px 12px}
+.ctr b{display:block;font-size:15px;margin-bottom:4px}
+input[type=range]{width:100%;accent-color:var(--accent)}
+#imconds,#lyconds{list-style:none;padding:0;margin:6px 0}
+.ly{position:relative;height:200px;background:#fff;border:2px solid #9aa3bf;border-radius:10px;overflow:hidden}
+.ly div{position:absolute;width:90px;height:90px;cursor:pointer}
+.ly div.sel{outline:3px solid #2f5fd0;outline-offset:2px}
+@media print{.top,button,.noprint{display:none!important}body{background:#fff;color:#000}.card{break-inside:avoid}}
+</style>
+</head>
+<body data-l="1">
+<div class="top"><div class="row"><button class="tab" data-lesson="1" aria-selected="true">Урок 1. Вставлення</button><button class="tab" data-lesson="2" aria-selected="false">Урок 2. Редагування та форматування</button><div class="bar"><i id="fill"></i></div><span class="small" id="prog"></span></div></div>
+<main id="app"></main>
+<script>
+var LS='graf_5kl_v1',storageOk=true;
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+var state={a:{},c:{},name:'',cls:'',lesson:1};
+try{var s=localStorage.getItem(LS);if(s)state=Object.assign(state,JSON.parse(s))}catch(e){storageOk=false}
+function save(){try{localStorage.setItem(LS,JSON.stringify(state))}catch(e){storageOk=false}}
+function $(i){return document.getElementById(i)}
+
+/* ===== data ===== */
+var PICKS={
+ p1a:{ico:'🧩',title:'1. Вид графічного об’єкта',min:2,intro:'Визнач, до якого виду належить об’єкт.',labels:['Фігура','Зображення','Піктограма','3D-модель'],
+  items:[['Умовний малюнок, що позначає дію чи предмет',2],['Прямокутник або стрілка для власного малюнка',0],['Фотографія з файлу або з Інтернету',1],['Об’ємна модель, яку можна повертати',3],['Значок «лупа»',2],['Фото лікаря з графічного файлу',1]],
+  why:['Піктограма — умовний малюнок із зображенням дій, явищ, предметів.','Фігури використовують для власних зображень із готових елементів.','Фото — це зображення.','Це 3D-модель.','Значок — піктограма.','Фото — це об’єкт виду «зображення».']},
+ p1b:{ico:'©️',title:'2. Права на зображення',min:2,intro:'Що зробити в кожній ситуації?',labels:['Указати автора й джерело','Краще не використовувати','Можна як власне'],
+  items:[['Фото з Інтернету з ліцензією Creative Commons',0],['Фото з сайту без відомостей про автора й ліцензію',1],['Власний малюнок із фігур, створений тобою',2],['Картинка з мультфільму, взята без дозволу автора',1]],
+  why:['З ліцензією CC потрібно вказати автора, посилання й ліцензію.','Без даних про права зображення краще не брати.','Власна робота — твоя.','Без дозволу автора брати не можна.']},
+ p2a:{ico:'🖱️',title:'1. Дія й результат',min:2,intro:'Що станеться з графічним об’єктом?',labels:['Перемістити','Змінити пропорційно','Спотворити','Повернути','Обрізати','Видалити'],
+  items:[['Потягнути за будь-яку точку зображення',0],['Потягнути за кутовий маркер',1],['Потягнути за маркер на середині сторони',2],['Потягнути за круглий маркер обертання',3],['Вибрати «Обрізати» й посунути краї',4],['Вибрати об’єкт і натиснути Delete',5]],
+  why:['Зображення можна переміщувати за будь-яку точку.','Кутові маркери змінюють розмір пропорційно.','Середні маркери змінюють лише ширину або висоту й спотворюють.','Маркер обертання повертає об’єкт.','Обрізання прибирає зайві частини.','Delete видаляє об’єкт.']},
+ p2b:{ico:'🎨',title:'2. Властивості об’єктів',min:2,intro:'Для чого використовують цю властивість?',labels:['Зображення','Фігура'],
+  items:[['Яскравість',0],['Колір заливки',1],['Контрастність',0],['Тип лінії контуру (штрих-пунктир)',1],['Насиченість кольору',0],['Градієнтна заливка',1]],
+  why:['Яскравість змінюють у зображення.','Заливка — властивість фігури.','Контрастність — властивість зображення.','Тип лінії — властивість контуру фігури.','Насиченість — властивість зображення.','Градієнт — стиль заливки фігури.']}};
+var ORD=[['Вибрати слайд, на який вставляємо зображення',1],['Вибрати Вставлення → Зображення',2],['Вибрати джерело й ввести ключове слово',3],['Вибрати зображення й кнопку «Вставити»',4]];
+var PAL=[['shape','💬','Фігура'],['img','🖼️','Зображення'],['icon','⭐','Піктограма'],['m3d','🧊','3D-модель'],['text','🔤','Текстове поле']];
+var SB=[['Є зображення',function(c){return c.img>=1}],['Є піктограма',function(c){return c.icon>=1}],['Є фігура-виноска',function(c){return c.shape>=1}],['Є підпис (текстове поле)',function(c){return c.text>=1}]];
+var DEF={w:100,h:100,lock:true,rot:0,br:100,co:100,tr:0,bw:0,bc:'#1b1b1b',sh:'rect',shd:false};
+var IM=[
+ {name:'Не спотворюй',goal:'Збільш зображення: ширина не менше 120 % і пропорції збережено.',conds:[['Ширина не менше 120 %',function(s){return s.w>=120}],['Пропорції збережено',function(s){return Math.abs(s.w-s.h)<=2}]]},
+ {name:'Підкладка під текст',goal:'Зроби напівпрозору світлу підкладку: прозорість від 40 %, яскравість від 110 %, без повороту.',conds:[['Прозорість від 40 %',function(s){return s.tr>=40}],['Яскравість від 110 %',function(s){return s.br>=110}],['Без повороту',function(s){return Math.abs(s.rot)<=2}]]},
+ {name:'Аватар',goal:'Зроби аватар: кругла маска, межа від 3 пт, тінь, поворот до 10° у будь-який бік, пропорції збережено.',conds:[['Кругла маска',function(s){return s.sh==='circle'}],['Межа від 3 пт',function(s){return s.bw>=3}],['Є тінь',function(s){return s.shd}],['Поворот не більше 10°',function(s){return Math.abs(s.rot)<=10}],['Пропорції збережено',function(s){return Math.abs(s.w-s.h)<=2}]]}];
+var LY={r:['Червоне коло','#e53935','50%',20,18],b:['Синій квадрат','#2f5fd0','8px',70,60],g:['Зелений трикутник','#2e9d4f','0',120,25]};
+var STEPS1=[
+ 'Відкрий Google Презентації (slides.google.com або через Google Classroom) і створи презентацію «Цікаві професії». Назви файл: Прізвище_Професії.',
+ 'На титульному слайді введи назву презентації, а в підзаголовок — прізвище, ім’я й клас.',
+ 'Додай слайд із макетом «Лише заголовок»: заголовок «Лікар». Вставлення → Зображення → Пошук в Інтернеті: введи «лікар», вибери зображення й вставити. Зміни розмір і положення.',
+ 'Вставлення → Фігура → Виноски: додай виноску біля зображення й введи в ній речення про професію.',
+ 'Додай слайд «Бухгалтер»: вставь зображення з Інтернету. Під ним додай текстове поле «Джерело: адреса сайту, автор».',
+ 'Додай слайд «Програміст»: вставь зображення з файлу (Вставлення → Зображення → Завантажити з комп’ютера), який покаже вчитель.',
+ 'Додай слайд «Робот» (макет «Пустий»). Створи робота з фігур (Вставлення → Фігура): заокруглений прямокутник — голова, два кола — очі, прямокутник — тулуб.',
+ 'Видали один зайвий об’єкт зі слайда: вибери й натисни Delete.',
+ 'Запусти показ (Ctrl + F5). Налаштуй доступ: «Усі, хто має посилання» → «Читач». Встав посилання в поле нижче.'];
+var STEPS2=[
+ 'Відкрий свою презентацію з уроку 1 і створи копію: Файл → Створити копію. Назви: Прізвище_Професії_2.',
+ 'На слайді «Лікар» зміни розмір зображення за кутовим маркером, щоб не спотворити його, і перемісти. Виноску поверни приблизно на 5–10° маркером обертання.',
+ 'Обріж зайві краї зображення (кнопка «Обрізати»). Спробуй обрізати за формою (коло або заокруглений прямокутник).',
+ 'Параметри форматування (Формат → Параметри форматування): зміни яскравість чи контрастність зображення; додай межу — колір, товщину, тип лінії.',
+ 'Постав виноску на передній план (Упорядкувати → На передній план), а потім підпис — поверх зображення. Переконайся, що текст видно.',
+ 'На слайді «Робот»: відформатуй частини — колір заливки, колір і товщину контуру, тип лінії (штрих).',
+ 'Вирівняй очі й тулуб (Упорядкувати → Вирівнювання), потім згрупуй усі частини (Упорядкувати → Згрупувати). Зроби копію робота (Ctrl + D) і зміни колір.',
+ 'Перевір вимоги до презентації: зображення ілюструють текст, тексти контрастні, стиль однаковий, є посилання на джерела.',
+ 'Запусти показ (Ctrl + F5). Збережи доступ «Усі, хто має посилання» → «Читач» і встав посилання в поле нижче.'];
+var CHK1=['Є принаймні одне зображення з Інтернету й підпис із джерелом','Є принаймні одне зображення з файлу','Є фігура-виноска з текстом','Робот створений із фігур','Зайвий об’єкт видалено'];
+var CHK2=['Зображення змінено без спотворення пропорцій','Зображення обрізано або обрізано за формою','Є межа та змінено яскравість чи контраст','Робот відформатовано й згруповано','Об’єкти не затуляють текст'];
+
+/* ===== scoring ===== */
+function scPick(id){var n=0;PICKS[id].items.forEach(function(r,i){if(state.a[id+'.'+i]===r[1])n++});return n}
+function scOrd(){var n=0;ORD.forEach(function(r,i){if(Number(state.a['o1.'+i])===r[1])n++});return state.c.o1?n:0}
+function cnt(){var c={shape:0,img:0,icon:0,m3d:0,text:0};(state.a.sb||[]).forEach(function(x){c[x.t]++});return c}
+function sbTotal(){return (state.a.sb||[]).length}
+function scSb(){return state.c.sb?(state.a.sbs||0):0}
+function scIm(){return [1,2,3].filter(function(n){return state.c['I'+n]}).length}
+function scLy(){return state.c.ly?(state.a.lys||0):0}
+function max1(){return 6+4+4+4}function max2(){return 6+6+3+2}
+function tot1(){return (state.c.p1a?scPick('p1a'):0)+(state.c.p1b?scPick('p1b'):0)+scOrd()+scSb()}
+function tot2(){return (state.c.p2a?scPick('p2a'):0)+(state.c.p2b?scPick('p2b'):0)+scIm()+scLy()}
+function urlOk(v){return /^https:\/\/docs\.google\.com\/presentation\/\S+/i.test((v||'').trim())}
+function pDone(n){var S=n===1?STEPS1:STEPS2;return S.every(function(_,i){return state.a['P'+n+'.s'+i]})&&urlOk(state.a['P'+n+'.url'])}
+function rDone(n){return (state.a['R'+n+'.a']||'').trim().length>5&&(state.a['R'+n+'.b']||'').trim().length>5}
+
+/* ===== views ===== */
+function theory1(){return '<section class="card" id="th"><span class="tag">⏱ ~6 хв</span><span class="tag">Теорія</span><h2>📖 Що треба знати</h2><p>Графічні об’єкти роблять виступ <b>наочним і зрозумілим</b>. Їх вставляють на слайди презентації.</p><div class="grid">'+
+ '<div class="box"><b>Фігура</b>Готові елементи (прямокутник, коло, стрілка, виноска) для власних зображень чи оздоблення.</div>'+
+ '<div class="box"><b>Зображення</b>Фотографії та малюнки з файлу, з Інтернету або з колекції.</div>'+
+ '<div class="box"><b>Піктограма</b>Умовний малюнок із зображенням дій, явищ, предметів (значок).</div>'+
+ '<div class="box"><b>3D-модель</b>Об’ємний об’єкт, який можна повертати (є в PowerPoint).</div></div>'+
+ '<h3>Як вставити в Google Презентаціях</h3><ul><li><b>Фігура:</b> Вставлення → Фігура → обери вид → накресли мишею на слайді.</li><li><b>Зображення:</b> Вставлення → Зображення → «Завантажити з комп’ютера» або «Пошук в Інтернеті» → вибери → «Вставити».</li><li><b>Видалити:</b> вибери об’єкт і натисни Delete.</li></ul>'+
+ '<h3>Авторське право</h3><p>Зображення з Інтернету мають авторів. Бери ті, що мають вільну ліцензію (наприклад, Creative Commons), і вказуй <b>автора, посилання й ліцензію</b>. Якщо відомостей про права немає — краще не використовуй.</p>'+
+ '<div class="box"><b>Пам’ятай</b>Зображення має ілюструвати текст, а не відволікати. На слайді — один-два образи.</div></section>'}
+function theory2(){return '<section class="card" id="th"><span class="tag">⏱ ~6 хв</span><span class="tag">Теорія</span><h2>📖 Що треба знати</h2><div class="grid">'+
+ '<div class="box"><b>Редагування</b>Перемістити, змінити розмір, повернути, обрізати, видалити, змінити порядок шарів.</div>'+
+ '<div class="box"><b>Форматування</b>Змінити властивості: заливку, контур, яскравість, контраст, прозорість, рамку.</div></div>'+
+ '<h3>Маркери вибраного об’єкта</h3><ul><li><b>Кутові</b> маркери змінюють розмір пропорційно.</li><li><b>Серединні</b> маркери змінюють лише ширину або висоту й можуть спотворити зображення.</li><li><b>Круглий маркер</b> обертання повертає об’єкт.</li></ul>'+
+ '<h3>Інструменти в Google Презентаціях</h3><ul><li><b>Обрізати</b> — прибрати зайві краї (або обрізати за формою).</li><li><b>Упорядкувати</b> — на передній/задній план, вирівнювання, групування.</li><li><b>Параметри форматування:</b> розмір і поворот, коригування (яскравість, контрастність, прозорість), тінь.</li><li><b>Фігури:</b> колір заливки, колір і товщина контуру, тип лінії.</li><li><b>Скинути зображення</b> — повернути вихідний вигляд.</li></ul>'+
+ '<h3>Властивості</h3><p><b>Фігури:</b> розміри, положення, колір контуру, колір і стиль заливки, товщина й тип контуру. <b>Зображення:</b> яскравість, контраст, прозорість, насиченість, межа, форма.</p>'+
+ '<div class="box"><b>Пам’ятай</b>Якщо об’єкти накладаються, змінюй їх порядок: що розташовано вище, те й видно.</div></section>'}
+function pickHtml(id){var P=PICKS[id],att=state.c[id]||0,n=scPick(id),h='<section class="card'+(att&&n===P.items.length?' done':'')+'" id="'+id+'"><span class="tag">⏱ ~'+P.min+' хв</span><span class="tag">Автоперевірка</span><h2>'+P.ico+' '+esc(P.title)+'</h2><p class="small">'+esc(P.intro)+'</p>';
+ P.items.forEach(function(r,i){var v=state.a[id+'.'+i],cls='',fb='';if(att&&v!=null){var ok=v===r[1];cls=ok?' ok':' bad';fb=ok?'✓ Правильно. '+esc(P.why[i]):(att>=2?'✗ '+esc(P.why[i]):'✗ Подумай ще раз.')}else if(att){cls=' bad';fb='Відповідь не обрано.'}
+  h+='<div class="it'+cls+'"><p>'+(i+1)+'. '+esc(r[0])+'</p><div class="chips">'+P.labels.map(function(l,j){return '<label><input type="radio" name="'+id+'.'+i+'" data-k="'+id+'.'+i+'" value="'+j+'"'+(v===j?' checked':'')+'> '+esc(l)+'</label>'}).join('')+'</div>'+(fb?'<p class="fb">'+fb+'</p>':'')+'</div>'});
+ h+='<button class="b" data-act="check" data-t="'+id+'">Перевірити</button>';if(att)h+='<span class="res">Результат: '+n+' з '+P.items.length+'</span>';return h+'</section>'}
+function ordHtml(){var att=state.c.o1||0,n=scOrd(),h='<section class="card'+(att&&n===4?' done':'')+'" id="o1"><span class="tag">⏱ ~2 хв</span><span class="tag">Автоперевірка</span><h2>🔢 3. Алгоритм вставлення зображення</h2><p class="small">Постав кроки в правильному порядку (1–4).</p>';
+ ORD.forEach(function(r,i){var v=state.a['o1.'+i],cls='',fb='';if(att&&v){var ok=Number(v)===r[1];cls=ok?' ok':' bad';fb=ok?'✓':'✗'}
+  h+='<div class="it'+cls+'"><label class="f" style="margin:0"><span>'+esc(r[0])+' '+fb+'</span><select data-k="o1.'+i+'" style="max-width:160px"><option value="">№</option>'+[1,2,3,4].map(function(k){return '<option'+(String(v)===String(k)?' selected':'')+'>'+k+'</option>'}).join('')+'</select></label></div>'});
+ h+='<button class="b" data-act="check" data-t="o1">Перевірити</button>';if(att)h+='<span class="res">Результат: '+n+' з 4</span>';return h+'</section>'}
+function itemVis(x){var m={shape:'<div style="background:#cfe0ff;border:2px solid #2f5fd0;border-radius:14px;padding:4px 10px;font-size:14px">💬 Виноска</div>',img:'<div style="width:80px;height:54px;background:linear-gradient(135deg,#8fd3ff,#4a8fe0);border-radius:6px;font-size:30px;line-height:54px">🖼️</div>',icon:'<div style="font-size:38px;line-height:1">⭐</div>',m3d:'<div style="font-size:40px;line-height:1">🧊</div>',text:'<div style="border:1px dashed #666;padding:2px 8px;font-size:14px">Текстове поле</div>'};return m[x.t]}
+function sbHtml(){var c=cnt(),att=state.c.sb||0,h='<section class="card'+(att&&state.a.sbs===4?' done':'')+'" id="sb"><span class="tag">⏱ ~6 хв</span><span class="tag">Інтерактив</span><h2>🖼️ 4. Склади слайд «Лікар»</h2><p class="small">Додай об’єкти з палітри на слайд і розташуй їх перетягуванням. Потрібні: зображення, піктограма, фігура-виноска й підпис. Не більше 6 об’єктів.</p><div class="pal">';
+ PAL.forEach(function(p){h+='<button type="button" data-act="sbadd" data-t="'+p[0]+'">'+p[1]+' '+p[2]+'</button>'});
+ h+='<button type="button" data-act="sbdel">🗑️ Видалити вибраний</button><button type="button" data-act="sbclr">Очистити</button></div><div class="canvas" id="cv">';
+ (state.a.sb||[]).forEach(function(x,i){h+='<div class="it2'+(state.a.sbsel===i?' sel':'')+'" data-i="'+i+'" style="left:'+x.x+'%;top:'+x.y+'%">'+itemVis(x)+'</div>'});
+ h+='</div><ul style="list-style:none;padding:0;margin:8px 0">'+SB.map(function(q){var ok=q[1](c);return '<li style="color:'+(ok?'var(--ok)':'var(--muted)')+'">'+(ok?'✓ ':'○ ')+q[0]+'</li>'}).join('')+'<li style="color:'+(sbTotal()<=6?'var(--ok)':'var(--bad)')+'">'+(sbTotal()<=6?'✓ ':'✗ ')+'Не більше 6 об’єктів (зараз '+sbTotal()+')</li></ul>';
+ h+='<button class="b" data-act="sbcheck">Зарахувати слайд</button>';if(att)h+='<span class="res">Результат: '+(state.a.sbs||0)+' з 4</span>';return h+'</section>'}
+function imS(){var k='im'+(state.a.imcur||1);if(!state.a[k])state.a[k]=Object.assign({},DEF);return state.a[k]}
+function imHtml(){var cur=state.a.imcur||1,L=IM[cur-1],s=imS();
+ var h='<section class="card'+(scIm()===3?' done':'')+'" id="im"><span class="tag">⏱ ~8 хв</span><span class="tag">Інтерактив</span><h2>🦋 3. Лабораторія зображення</h2><p class="small">Змінюй властивості зображення й дивись результат. Виконай три завдання й клацни «Зарахувати».</p><div>';
+ [1,2,3].forEach(function(n){h+='<button class="b ghost'+(n===cur?' on':'')+'" data-act="imsel" data-n="'+n+'">'+(state.c['I'+n]?'✓ ':'')+'Завдання '+n+'</button>'});
+ h+='</div><p><b>'+esc(L.name)+'.</b> '+esc(L.goal)+'</p><div class="stage"><div id="imbox">🦋</div></div><div class="ctr">'+
+ '<div><b>Ширина: <span id="wv"></span> %</b><input type="range" min="50" max="160" data-im="w" value="'+s.w+'"></div>'+
+ '<div><b>Висота: <span id="hv"></span> %</b><input type="range" min="50" max="160" data-im="h" value="'+s.h+'"></div>'+
+ '<div><b>Пропорції</b><label class="opt" style="margin:2px 0;padding:3px 8px"><input type="checkbox" data-im="lock"'+(s.lock?' checked':'')+'> Зберігати пропорції</label></div>'+
+ '<div><b>Поворот: <span id="rv"></span>°</b><input type="range" min="-45" max="45" data-im="rot" value="'+s.rot+'"></div>'+
+ '<div><b>Яскравість: <span id="bv"></span> %</b><input type="range" min="50" max="160" data-im="br" value="'+s.br+'"></div>'+
+ '<div><b>Контрастність: <span id="cv2"></span> %</b><input type="range" min="50" max="160" data-im="co" value="'+s.co+'"></div>'+
+ '<div><b>Прозорість: <span id="tv"></span> %</b><input type="range" min="0" max="80" data-im="tr" value="'+s.tr+'"></div>'+
+ '<div><b>Межа: <span id="bwv"></span> пт</b><input type="range" min="0" max="10" data-im="bw" value="'+s.bw+'"><select data-im="bc" style="margin-top:4px"><option value="#1b1b1b">Чорна</option><option value="#2f5fd0">Синя</option><option value="#c62828">Червона</option></select></div>'+
+ '<div><b>Форма (обрізати за формою)</b><select data-im="sh"><option value="rect">Прямокутник</option><option value="rounded">Заокруглений</option><option value="circle">Коло</option></select><label class="opt" style="margin:6px 0 0;padding:3px 8px"><input type="checkbox" data-im="shd"'+(s.shd?' checked':'')+'> Тінь</label></div></div>'+
+ '<ul id="imconds"></ul><button class="b" data-act="imdone">Зарахувати завдання</button><button class="b ghost" data-act="imreset">Скинути зображення</button><span class="res" id="immsg"></span></section>';return h}
+function imPreview(){var s=imS(),b=$('imbox');if(!b)return;
+ b.style.transform='rotate('+s.rot+'deg) scale('+(s.w/100)+','+(s.h/100)+')';
+ b.style.filter='brightness('+s.br+'%) contrast('+s.co+'%)';b.style.opacity=1-s.tr/100;
+ b.style.border=s.bw+'px solid '+s.bc;b.style.borderRadius=s.sh==='circle'?'50%':s.sh==='rounded'?'22px':'0';
+ b.style.boxShadow=s.shd?'6px 8px 14px rgba(0,0,0,.45)':'none';
+ var set=function(id,v){var e=$(id);if(e)e.textContent=v};set('wv',s.w);set('hv',s.h);set('rv',s.rot);set('bv',s.br);set('cv2',s.co);set('tv',s.tr);set('bwv',s.bw);
+ var sel=document.querySelector('[data-im=sh]');if(sel)sel.value=s.sh;var bc=document.querySelector('[data-im=bc]');if(bc)bc.value=s.bc;
+ var L=IM[(state.a.imcur||1)-1];$('imconds').innerHTML=L.conds.map(function(c){var ok=c[1](s);return '<li style="color:'+(ok?'var(--ok)':'var(--muted)')+'">'+(ok?'✓ ':'○ ')+esc(c[0])+'</li>'}).join('')}
+function lyOrder(){return state.a.lyo||['r','b','g']}
+function lyHtml(){var o=lyOrder(),att=state.c.ly||0,h='<section class="card'+(att&&state.a.lys===2?' done':'')+'" id="ly"><span class="tag">⏱ ~3 хв</span><span class="tag">Інтерактив</span><h2>🗂️ 4. Порядок об’єктів на слайді</h2><p class="small">Вибери об’єкт і змінюй його положення відносно інших. <b>Мета:</b> червоне коло — зверху над усіма, а зелений трикутник — найнижче (його частково закривають інші).</p><div class="ly" id="lyst">';
+ o.forEach(function(k,i){var d=LY[k],sh=k==='g'?'clip-path:polygon(50% 0,0 100%,100% 100%);':'';h+='<div data-ly="'+k+'" class="'+(state.a.lysel===k?'sel':'')+'" style="left:'+d[3]+'px;top:'+d[4]+'px;background:'+d[1]+';border-radius:'+d[2]+';z-index:'+(i+1)+';'+sh+'" title="'+d[0]+'"></div>'});
+ h+='</div><div class="pal"><button type="button" data-act="lyf">На передній план</button><button type="button" data-act="lyu">Вперед</button><button type="button" data-act="lyd">Назад</button><button type="button" data-act="lyb">На задній план</button></div>';
+ var top=o[o.length-1]==='r',bot=o[0]==='g';
+ h+='<ul id="lyconds" style="list-style:none;padding:0"><li style="color:'+(top?'var(--ok)':'var(--muted)')+'">'+(top?'✓ ':'○ ')+'Червоне коло зверху</li><li style="color:'+(bot?'var(--ok)':'var(--muted)')+'">'+(bot?'✓ ':'○ ')+'Зелений трикутник найнижче</li></ul><button class="b" data-act="lycheck">Зарахувати</button>';if(att)h+='<span class="res">Результат: '+(state.a.lys||0)+' з 2</span>';return h+'</section>'}
+function pHtml(n){var S=n===1?STEPS1:STEPS2,C=n===1?CHK1:CHK2,h='<section class="card'+(pDone(n)?' done':'')+'" id="P'+n+'"><span class="tag">⏱ ~'+(n===1?20:18)+' хв</span><span class="tag">Практична робота</span><h2>💻 '+(n===1?'5':'5')+'. Працюємо в Google Презентаціях</h2><p class="small">Увага! Дотримуйся вимог безпеки в кабінеті інформатики. Виконуй кроки по черзі й став галочки. Назви команд можуть трохи відрізнятися залежно від мови інтерфейсу.</p>';
+ S.forEach(function(s,i){h+='<label class="opt"><input type="checkbox" data-bool="P'+n+'.s'+i+'"'+(state.a['P'+n+'.s'+i]?' checked':'')+'> <span><b>'+(i+1)+'.</b> '+esc(s)+'</span></label>'});
+ h+='<label class="f"><span>Посилання на твою презентацію</span><input type="url" placeholder="https://docs.google.com/presentation/…" data-k="P'+n+'.url" value="'+esc(state.a['P'+n+'.url'])+'"></label><p class="small" id="uh'+n+'">'+(urlOk(state.a['P'+n+'.url'])?'✓ Посилання виглядає правильно.':'Встав адресу, що починається з https://docs.google.com/presentation/')+'</p>';
+ var rq=state.a['P'+n+'.req']||[];h+='<h3>Перевір свою роботу</h3>'+C.map(function(r,j){return '<label class="opt" style="padding:4px 10px"><input type="checkbox" data-k="P'+n+'.req" data-opt="'+(j+1)+'"'+(rq.indexOf(j+1)>-1?' checked':'')+'> <span>'+r+'</span></label>'}).join('');return h+'</section>'}
+function rHtml(n){var q=n===1?['Для чого вставляють графічні об’єкти на слайди? Які їх види ти знаєш?','Що потрібно вказувати під зображенням з Інтернету і чому?']:['Чим редагування графічного об’єкта відрізняється від форматування?','Як змінити взаємне розташування об’єктів, що накладаються?'];
+ return '<section class="card" id="R'+n+'"><span class="tag">⏱ ~3 хв</span><span class="tag">Рефлексія</span><h2>💭 6. Підсумок</h2><label class="f"><span>'+q[0]+'</span><textarea data-k="R'+n+'.a">'+esc(state.a['R'+n+'.a'])+'</textarea></label><label class="f"><span>'+q[1]+'</span><textarea data-k="R'+n+'.b">'+esc(state.a['R'+n+'.b'])+'</textarea></label><label class="f"><span>Оціни свою роботу</span><select data-k="R'+n+'.s"><option value="">— обери —</option>'+[1,2,3,4,5].map(function(k){return '<option'+(String(state.a['R'+n+'.s'])===String(k)?' selected':'')+'>'+k+'</option>'}).join('')+'</select></label></section>'}
+function resHtml(n){var t=n===1?tot1():tot2(),m=n===1?max1():max2();return '<section class="card" id="res"><h2>🏆 Результат уроку '+n+'</h2><p>Автоперевірка: <b>'+t+' з '+m+'</b> балів. Практичну частину й рефлексію оцінює вчитель.</p><button class="b ghost" data-act="copy">Показати результат для копіювання</button><button class="b ghost" data-act="print">Друк / PDF</button><button class="b ghost" data-act="reset">Стерти все</button><div id="out"></div></section>'}
+function render(){var n=state.lesson||1,h='';document.body.setAttribute('data-l',n);
+ document.querySelectorAll('.tab').forEach(function(b){b.setAttribute('aria-selected',String(Number(b.dataset.lesson)===n))});
+ if(!storageOk)h+='<div class="card" style="background:var(--soft)">⚠️ Браузер не дозволяє зберігати дані. Не оновлюй сторінку, а наприкінці скопіюй результат.</div>';
+ h+='<div class="hero"><span class="badge">Інформатика · 5 клас · Тема 3 · Урок '+n+'</span><h1>'+(n===1?'Вставлення на слайд графічних об’єктів':'Редагування та форматування графічних об’єктів на слайді')+'</h1><p>Відповіді зберігаються автоматично.</p></div>';
+ h+='<section class="card"><label class="f"><span>Прізвище та ім’я</span><input type="text" data-k="name" value="'+esc(state.name)+'"></label><label class="f"><span>Клас</span><input type="text" data-k="cls" value="'+esc(state.cls)+'"></label></section>';
+ if(n===1)h+=theory1()+pickHtml('p1a')+pickHtml('p1b')+ordHtml()+sbHtml()+pHtml(1)+rHtml(1)+resHtml(1);
+ else h+=theory2()+pickHtml('p2a')+pickHtml('p2b')+imHtml()+lyHtml()+pHtml(2)+rHtml(2)+resHtml(2);
+ $('app').innerHTML=h;if(n===2)imPreview();progress()}
+function progress(){var n=state.lesson||1,d=0,tot=6;
+ if(n===1){['p1a','p1b','o1','sb'].forEach(function(k){if(state.c[k])d++})}else{['p2a','p2b','ly'].forEach(function(k){if(state.c[k])d++});if(scIm()===3)d++}
+ if(pDone(n))d++;if(rDone(n))d++;$('fill').style.width=Math.round(d/tot*100)+'%';$('prog').textContent=d+' з '+tot}
+function refresh(id,fn){var el=$(id),t=document.createElement('div'),y=window.scrollY;t.innerHTML=fn();el.replaceWith(t.firstChild);if(id==='im')imPreview();window.scrollTo(0,y);progress();var r=$('res');if(r){var t2=document.createElement('div');t2.innerHTML=resHtml(state.lesson);r.replaceWith(t2.firstChild)}}
+function report(n){var L=[];L.push(n===1?'Урок 1. Вставлення на слайд графічних об’єктів. 5 клас':'Урок 2. Редагування та форматування графічних об’єктів. 5 клас');L.push('Учень: '+state.name+', '+(state.cls||'—'));
+ if(n===1){L.push('Автоперевірка: '+tot1()+' з '+max1(),'  1 Види об’єктів: '+(state.c.p1a?scPick('p1a'):'—')+'/6','  2 Права: '+(state.c.p1b?scPick('p1b'):'—')+'/4','  3 Алгоритм: '+scOrd()+'/4','  4 Слайд «Лікар»: '+scSb()+'/4')}
+ else{L.push('Автоперевірка: '+tot2()+' з '+max2(),'  1 Дії: '+(state.c.p2a?scPick('p2a'):'—')+'/6','  2 Властивості: '+(state.c.p2b?scPick('p2b'):'—')+'/6','  3 Лабораторія: '+scIm()+'/3','  4 Порядок: '+scLy()+'/2')}
+ var S=n===1?STEPS1:STEPS2,C=n===1?CHK1:CHK2;
+ L.push('','Практична: кроків '+S.filter(function(_,i){return state.a['P'+n+'.s'+i]}).length+' з '+S.length,'Посилання: '+(state.a['P'+n+'.url']||'—'),'Самоперевірка: '+((state.a['P'+n+'.req']||[]).length)+' з '+C.length,'','Рефлексія:','  1: '+(state.a['R'+n+'.a']||'—'),'  2: '+(state.a['R'+n+'.b']||'—'),'  Самооцінка: '+(state.a['R'+n+'.s']||'—'));return L.join('\n')}
+
+/* ===== events ===== */
+document.addEventListener('input',onChange);document.addEventListener('change',onChange);
+function onChange(e){var el=e.target,d=el.dataset||{};
+ if(d.im){var s=imS(),k=d.im,v;if(el.type==='checkbox')v=el.checked;else if(el.type==='range')v=Number(el.value);else v=el.value;s[k]=v;
+  if(s.lock&&(k==='w'||k==='h'||k==='lock')){if(k==='h')s.w=s.h;else if(k==='w')s.h=s.w;else if(k==='lock'&&v)s.h=s.w;var ws=document.querySelector('[data-im=w]'),hs=document.querySelector('[data-im=h]');if(ws)ws.value=s.w;if(hs)hs.value=s.h}
+  save();imPreview();return}
+ if(d.bool){state.a[d.bool]=el.checked;save();progress();var n0=d.bool.charAt(1);var c=$('P'+n0);if(c)c.classList.toggle('done',pDone(Number(n0)));return}
+ var k2=d.k;if(!k2)return;
+ if(k2==='name'||k2==='cls'){state[k2]=el.value;save();return}
+ if(el.type==='checkbox'){var arr=Array.isArray(state.a[k2])?state.a[k2].slice():[],j=Number(d.opt),ix=arr.indexOf(j);if(el.checked&&ix<0)arr.push(j);if(!el.checked&&ix>-1)arr.splice(ix,1);state.a[k2]=arr}
+ else if(el.type==='radio')state.a[k2]=Number(el.value);else state.a[k2]=el.value;
+ save();progress();
+ var m=/^P(\d)\.url$/.exec(k2);if(m){var h=$('uh'+m[1]);if(h)h.textContent=urlOk(el.value)?'✓ Посилання виглядає правильно.':'Встав адресу, що починається з https://docs.google.com/presentation/';var c2=$('P'+m[1]);if(c2)c2.classList.toggle('done',pDone(Number(m[1])))}}
+var drag=null;
+document.addEventListener('pointerdown',function(e){
+ var it=e.target.closest('.it2');if(it&&it.parentNode.id==='cv'){var cv=$('cv'),r=cv.getBoundingClientRect(),i=Number(it.dataset.i),x=state.a.sb[i];drag={i:i,el:it,dx:e.clientX-(r.left+x.x/100*r.width),dy:e.clientY-(r.top+x.y/100*r.height),moved:false};state.a.sbsel=i;cv.querySelectorAll('.it2').forEach(function(z){z.classList.toggle('sel',z===it)});e.preventDefault();return}
+ var cvv=e.target.closest('#cv');if(cvv){state.a.sbsel=null;cvv.querySelectorAll('.it2').forEach(function(z){z.classList.remove('sel')})}});
+document.addEventListener('pointermove',function(e){if(!drag)return;var cv=$('cv'),r=cv.getBoundingClientRect();var x=(e.clientX-drag.dx-r.left)/r.width*100,y=(e.clientY-drag.dy-r.top)/r.height*100;x=Math.max(0,Math.min(86,x));y=Math.max(0,Math.min(82,y));drag.el.style.left=x+'%';drag.el.style.top=y+'%';state.a.sb[drag.i].x=Math.round(x*10)/10;state.a.sb[drag.i].y=Math.round(y*10)/10});
+document.addEventListener('pointerup',function(){if(drag){drag=null;save()}});
+document.addEventListener('click',function(e){
+ var lt=e.target.closest('[data-lesson]');if(lt){state.lesson=Number(lt.dataset.lesson);save();render();window.scrollTo(0,0);return}
+ var ly=e.target.closest('[data-ly]');if(ly){state.a.lysel=ly.dataset.ly;save();refresh('ly',lyHtml);return}
+ var b=e.target.closest('[data-act]');if(!b)return;var act=b.dataset.act;
+ if(act==='check'){var id=b.dataset.t;state.c[id]=(state.c[id]||0)+1;save();refresh(id,id==='o1'?ordHtml:function(){return pickHtml(id)});return}
+ if(act==='sbadd'){var a=state.a.sb||[];if(a.length>=10)return;a.push({t:b.dataset.t,x:6+((a.length*17)%70),y:8+((a.length*23)%60)});state.a.sb=a;state.a.sbsel=a.length-1;save();refresh('sb',sbHtml);return}
+ if(act==='sbdel'){var s2=state.a.sbsel;if(s2!=null&&state.a.sb&&state.a.sb[s2]){state.a.sb.splice(s2,1);state.a.sbsel=null;save();refresh('sb',sbHtml)}return}
+ if(act==='sbclr'){state.a.sb=[];state.a.sbsel=null;save();refresh('sb',sbHtml);return}
+ if(act==='sbcheck'){var c=cnt(),n=SB.filter(function(q){return q[1](c)}).length;if(sbTotal()>6)n=Math.max(0,n-1);state.a.sbs=n;state.c.sb=(state.c.sb||0)+1;save();refresh('sb',sbHtml);return}
+ if(act==='imsel'){state.a.imcur=Number(b.dataset.n);save();refresh('im',imHtml);return}
+ if(act==='imreset'){state.a['im'+(state.a.imcur||1)]=Object.assign({},DEF);save();refresh('im',imHtml);return}
+ if(act==='imdone'){var cur=state.a.imcur||1,ok=IM[cur-1].conds.every(function(q){return q[1](imS())});if(ok){state.c['I'+cur]=1;save();refresh('im',imHtml);$('immsg').textContent='✓ Завдання '+cur+' зараховано!'}else $('immsg').textContent='Ще не всі умови виконано. Перевір список вище.';return}
+ if(act==='lyf'||act==='lyu'||act==='lyd'||act==='lyb'){var sel=state.a.lysel;if(!sel)return;var o=lyOrder().slice(),i=o.indexOf(sel);o.splice(i,1);
+  if(act==='lyf')o.push(sel);else if(act==='lyb')o.unshift(sel);else if(act==='lyu')o.splice(Math.min(o.length,i+1),0,sel);else o.splice(Math.max(0,i-1),0,sel);state.a.lyo=o;save();refresh('ly',lyHtml);return}
+ if(act==='lycheck'){var o2=lyOrder(),n2=(o2[o2.length-1]==='r'?1:0)+(o2[0]==='g'?1:0);state.a.lys=n2;state.c.ly=(state.c.ly||0)+1;save();refresh('ly',lyHtml);return}
+ if(act==='print'){window.print();return}
+ if(act==='copy'){var w=$('out');w.innerHTML='<textarea readonly style="min-height:200px;font-size:14px;font-family:Consolas,monospace"></textarea><button class="b" data-act="doCopy">Скопіювати</button>';var ta=w.querySelector('textarea');ta.value=report(state.lesson);ta.select();return}
+ if(act==='doCopy'){var t=document.querySelector('#out textarea');t.select();try{navigator.clipboard.writeText(t.value)}catch(x){document.execCommand('copy')}b.textContent='Скопійовано ✓';return}
+ if(act==='reset'){if(confirm('Стерти всі відповіді обох уроків і почати спочатку?')){var l=state.lesson;state={a:{},c:{},name:'',cls:'',lesson:l};save();render();window.scrollTo(0,0)}}});
+document.addEventListener('keydown',function(e){if((e.key==='Delete'||e.key==='Backspace')&&state.a.sbsel!=null&&document.activeElement===document.body&&state.lesson===1){var s=state.a.sbsel;if(state.a.sb&&state.a.sb[s]){state.a.sb.splice(s,1);state.a.sbsel=null;save();refresh('sb',sbHtml)}}});
+render();
+</script>
+</body>
+</html>
